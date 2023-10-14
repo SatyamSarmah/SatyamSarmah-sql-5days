@@ -1,0 +1,55 @@
+Create table:
+
+create table bookings(id number(5) primary key, name varchar2(20) not null, room_no number(5) not null, checkin_date date not null, checkout_date date not null, discount number(5) default 0 not null, total_price number(20) not null,
+country varchar2(20) default 'India' not null, created_at date default sysdate);
+
+
+
+create sequence booking_name start with 1 increment by 1;
+
+
+
+insert data:
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Abhijeet' , 02, '21-jun-2023', '29-jun-2023',500, 2999, 'India');
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Alex' , 21, '24-jun-2023', '27-jun-2023',500, 21999, 'Australia');
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Abhinash' , 12, '21-march-2023', '24-march-2023',700, 3999, 'India');
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Abhirup' , 32, '21-jan-2023', '02-feb-2023',800, 1999, 'India');
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Aemon' , 23, '21-july-2023', '29-july-2023',200, 24000, 'Buenes Aires');
+
+insert into bookings(id, name, room_no, checkin_date, checkout_date, discount, total_price,
+country) values(booking_name.nextval, 'Aryan' , 09, '01-jun-2023', '09-jun-2023',550, 2199, 'India');
+
+
+
+
+Operations performed:
+
+
+1. Fetch the count of prople from different countries
+-> select count(*), country from bookings group by country;
+
+
+2. Display the data from which country we have maximum customers
+-> select count(*), country from bookings group by country order by count(*) desc fetch next 2 rows only;
+
+
+3. Display all the customer whose checkin month is june
+-> select * from bookings where extract(month from checkin_date)=6;
+
+
+4. Display all the customers who are living for more than four days
+-> select * from bookings where checkout_date-checkin_date>4;
+
+
+5. Display the final amount to be paid by customer with their names
+-> select name, (checkout_date-checkin_date)*total_price - ((checkout_date-checkin_date))*discount as payment from bookings;
